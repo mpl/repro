@@ -1,0 +1,6 @@
+gopherjs build ./gocode/
+start some webserver here
+go to http://localhost:8080
+click on fetch
+monitor as memory slowly, but surely, leaks
+memory stays lost even after background code terminates, and until tab is closed.
