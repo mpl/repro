@@ -18,11 +18,11 @@ func main() {
 }
 
 const (
-	maxFetch = 1000
+	maxFetch = 10000
 	fetchURL = "http://localhost:8080/gocode.js"
 )
 
-var fetchInterval = 10 * time.Millisecond
+var fetchInterval = 1 * time.Millisecond
 
 func fetch() {
 	go func() {
@@ -36,10 +36,12 @@ func fetch() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			defer res.Body.Close()
-			if _, err := io.Copy(ioutil.Discard, res.Body); err != nil {
-				log.Fatal(err)
-			}
+			func() {
+				defer res.Body.Close()
+				if _, err := io.Copy(ioutil.Discard, res.Body); err != nil {
+					log.Fatal(err)
+				}
+			}()
 		}
 	}()
 }
